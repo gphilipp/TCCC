@@ -184,7 +184,9 @@ public class ClearCaseConnection {
     String[] args;
     if (this.myUCMSupported) {
       String streamName = getStreamName();
-      args = new String[]{"lshistory", "-r", "-nco", "-branch", streamName, "-since", since, "-fmt", FORMAT, myViewPath.getWholePath()};
+      // we don't specify any path at the end of the command because it would output absolute
+      // element name paths instead of relative ones
+      args = new String[]{"lshistory", "-r", "-nco", "-branch", streamName, "-since", since, "-fmt", FORMAT};
     } else {
       args = new String[]{"lshistory", "-all", "-since", since, "-fmt", FORMAT, insertDotAfterVOB(getViewWholePath())};
     }

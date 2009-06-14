@@ -141,7 +141,6 @@ public class ClearCaseSupport extends ServerVcsSupport implements VcsPersonalSup
         final String versionBeforeChange = element.getPreviousVersion();
         final String versionAfterChange = element.getObjectVersion();
         addChange(element, element.getObjectName(), VcsChangeInfo.Type.CHANGED, versionBeforeChange, versionAfterChange, key2changes);
-        Loggers.VCS.debug("Change detected : " + element.getLogRepresentation());
       }
     };
 
@@ -160,6 +159,7 @@ public class ClearCaseSupport extends ServerVcsSupport implements VcsPersonalSup
     if (realKey != null) {
       realKey.getCommentHolder().update(element.getActivity(), element.getComment(), "version description ???");
     }
+    Loggers.VCS.info("Added change : " + vcsChange);
   }
 
   @Nullable
