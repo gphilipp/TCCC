@@ -649,7 +649,8 @@ public class ClearCaseConnection {
    * @throws IOException if an io error occurs
    */
   public String getActivityHeadline(@NotNull String activityId) throws VcsException, IOException {
-    InputStream inputStream = executeSimpleProcess(getViewWholePath(), new String[]{"lsact", "-fmt", "%[headline]p", activityId});
+    InputStream inputStream = executeSimpleProcess(getViewWholePath(), 
+        new String[]{"lsact", "-fmt", "%[headline]p", activityId});
     return new BufferedReader(new InputStreamReader(inputStream)).readLine();
   }
 }
