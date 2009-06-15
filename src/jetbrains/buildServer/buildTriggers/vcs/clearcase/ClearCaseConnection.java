@@ -325,33 +325,6 @@ public class ClearCaseConnection {
     };
   }
 
-  /**
-   * I don't know why they do this.
-   *
-   * @param fullPath
-   * @return
-   */
-  public String getVersionDescription(final String fullPath) {
-    try {
-      String[] params = {"describe", "-fmt", "%c", "-pname", insertDotAfterVOB(fullPath)};
-      final InputStream input = executeAndReturnProcessInput(params);
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-      try {
-        final String line = reader.readLine();
-        if (line != null) {
-          return line;
-        } else {
-          return "";
-        }
-      } finally {
-        reader.close();
-      }
-    } catch (Exception e) {
-      //ignore
-      return "";
-    }
-  }
-
   private InputStream executeAndReturnProcessInput(final String[] params) throws IOException, VcsException {
     return myProcess.executeAndReturnProcessInput(params);
   }
@@ -435,14 +408,6 @@ public class ClearCaseConnection {
     } catch (IOException e) {
       throw new VcsException(e);
     }
-  }
-
-  private String cutOffVersion(final String path) {
-    final int versionSep = path.lastIndexOf(CCParseUtil.CC_VERSION_SEPARATOR);
-    if (versionSep != -1) {
-      return path.substring(0, versionSep + CCParseUtil.CC_VERSION_SEPARATOR.length());
-    }
-    else return path + CCParseUtil.CC_VERSION_SEPARATOR;
   }
 
   @NotNull
@@ -673,5 +638,18 @@ public class ClearCaseConnection {
 
   public ViewPath getViewPath() {
     return myViewPath;
+  }
+
+  /**
+   * Returns the Clearcase activity headline given an activity id.
+   *
+   * @param activityId the id of the clearcase activity
+   * @return the activity headline
+   * @throws VcsException if a clearcase error occurs
+   * @throws IOException if an io error occurs
+   */
+  public String getActivityHeadline(@NotNull String activityId) throws VcsException, IOException {
+    InputStream inputStream = executeSimpleProcess(getViewWholePath(), new String[]{"lsact", "-fmt", "%[headline]p", activityId});
+    return new BufferedReader(new InputStreamReader(inputStream)).readLine();
   }
 }

@@ -28,7 +28,7 @@ public class HistoryElement {
   private final String myOperation;
   private final String myEvent;
   private final String myComment;
-  private final String myActivity;
+  private final String myActivityId;
   private String myPreviousVersion;
   private static final int EXPECTED_CHANGE_FIELD_COUNT = 10;
 
@@ -42,7 +42,7 @@ public class HistoryElement {
       final String operation,
       final String event,
       final String comment,
-      final String activity,
+      final String activityId,
       final String previousVersion) {
     myUser = user;
     myDate = date;
@@ -52,7 +52,7 @@ public class HistoryElement {
     myOperation = operation;
     myEvent = event;
     myComment = comment;
-    myActivity = activity;
+    myActivityId = activityId;
     myPreviousVersion = previousVersion;
   }
 
@@ -64,7 +64,8 @@ public class HistoryElement {
                                                      final String operation,
                                                      final String event,
                                                      final String comment,
-                                                     final String activity, String previousVersion) {
+                                                     final String activityId, 
+                                                     final String previousVersion) {
     String kind = objectKind, version = objectVersion;
     if ("rmver".equals(operation) && "destroy version on branch".equals(event)) {
       final String extractedVersion = extractVersion(comment);
@@ -73,7 +74,7 @@ public class HistoryElement {
         version = extractedVersion;
       }
     }
-    return new HistoryElement(user, date, objectName, kind, version, operation, event, comment, activity, previousVersion);
+    return new HistoryElement(user, date, objectName, kind, version, operation, event, comment, activityId, previousVersion);
 
   }
 
@@ -101,11 +102,11 @@ public class HistoryElement {
       String event = strings[6];
       String comment = strings[7];
       String previousVersion = strings[8];
-      String activity = "";
+      String activityId = "";
       if (strings.length != EXPECTED_CHANGE_FIELD_COUNT - 1) {
-        activity = strings[9];
+        activityId = strings[9];
       }
-      return createHistoryElement(user, date, objectName, objectKind, objectVersion, operation, event, comment, activity, previousVersion);
+      return createHistoryElement(user, date, objectName, objectKind, objectVersion, operation, event, comment, activityId, previousVersion);
 
     }
   }
@@ -144,7 +145,7 @@ public class HistoryElement {
   }
 
   public String getActivity() {
-    return myActivity;
+    return myActivityId;
   }
 
   public String getPreviousVersion() {

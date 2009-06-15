@@ -38,7 +38,7 @@ public class CommentHolder {
 
   public void addComment(String str) {
     if (str != null && str.length() > 0) {
-      if (!myDescriptions.contains(str)) {
+      if (!myComments.contains(str)) {
         myComments.add(str);
       }
     }
@@ -48,7 +48,7 @@ public class CommentHolder {
     final StringBuffer result = new StringBuffer();
 
     if (!myActivities.isEmpty()) {
-      result.append(myActivities.size() > 1 ? "Activities" : "Activity").append(":");
+      result.append(myActivities.size() > 1 ? "Activities" : "Activity").append(" : ");
       for (String activity : myActivities) {
         result.append('\n').append('\t').append(activity);
       }
@@ -56,13 +56,24 @@ public class CommentHolder {
       result.append('\n');
     }
 
+
+    // TODO.GILLES : wait for Jetbrains to reply in the following thread : 
+    // http://www.jetbrains.net/devnet/thread/282290?tstart=0
+    /*
     if (!myDescriptions.isEmpty()) {
       result.append(myDescriptions.size() > 1 ? "Descriptions" : "Description").append(":");
       for (String activity : myDescriptions) {
         result.append('\n').append('\t').append(activity);
       }
     }
+    */
 
+    if (!myComments.isEmpty()) {
+      result.append(myComments.size() > 1 ? "Comments" : "Comment").append(" : ");
+      for (String comment : myComments) {
+        result.append('\n').append('\t').append(comment);
+      }
+    }
 
     for (String comment : myComments) {
       result.append('\n').append(comment);
