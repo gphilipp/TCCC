@@ -21,7 +21,6 @@ import java.util.Set;
 
 public class CommentHolder {
   private final Set<String> myActivities = new LinkedHashSet<String>();
-  private final Set<String> myDescriptions = new LinkedHashSet<String>();
   private final Set<String> myComments = new LinkedHashSet<String>();
 
   public void addActivity(String str) {
@@ -30,11 +29,6 @@ public class CommentHolder {
     }
   }
 
-  public void addDescription(String str) {
-    if (str != null && str.length() > 0) {
-      myDescriptions.add(str);
-    }
-  }
 
   public void addComment(String str) {
     if (str != null && str.length() > 0) {
@@ -44,47 +38,35 @@ public class CommentHolder {
     }
   }
 
-  public String toString() {
-    final StringBuffer result = new StringBuffer();
-
-    if (!myActivities.isEmpty()) {
-      result.append(myActivities.size() > 1 ? "Activities" : "Activity").append(" : ");
-      for (String activity : myActivities) {
-        result.append('\n').append('\t').append(activity);
-      }
-      
-      result.append('\n');
-    }
-
-
-    // TODO.GILLES : wait for Jetbrains to reply in the following thread : 
-    // http://www.jetbrains.net/devnet/thread/282290?tstart=0
-    /*
-    if (!myDescriptions.isEmpty()) {
-      result.append(myDescriptions.size() > 1 ? "Descriptions" : "Description").append(":");
-      for (String activity : myDescriptions) {
-        result.append('\n').append('\t').append(activity);
-      }
-    }
-    */
-
-    if (!myComments.isEmpty()) {
-      result.append(myComments.size() > 1 ? "Comments" : "Comment").append(" : ");
-      for (String comment : myComments) {
-        result.append('\n').append('\t').append(comment);
-      }
-    }
-
-    for (String comment : myComments) {
-      result.append('\n').append(comment);
-    }
-    return result.toString();
-
+  public Set<String> getActivities() {
+    return new LinkedHashSet<String>(myActivities);
   }
 
-  public void update(final String activity, final String comment, final String versionDescription) {
+  public Set<String> getComments() {
+    return new LinkedHashSet<String>(myComments);
+  }
+
+  public String toString() {
+    final StringBuffer sb = new StringBuffer();
+    format(sb, myActivities, "Activity", "Activities");
+    format(sb, myComments, "Comment", "Comments");
+    return sb.toString();
+  }
+
+  void format(StringBuffer result, Set<String> list, String singular, String plural) {
+    if (!list.isEmpty()) {
+      result.append(list.size() > 1 ? plural : singular).append(" : ");
+      if (list.size() > 1) {
+          result.append('\n');
+        }
+      for (String s : list) {
+        result.append(s).append('\n');
+      }
+    }
+  }
+
+  public void update(final String activity, final String comment) {
     addActivity(activity);
-    addDescription(versionDescription);
     addComment(comment);
   }
 }

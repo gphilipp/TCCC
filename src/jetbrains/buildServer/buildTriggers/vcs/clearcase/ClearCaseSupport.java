@@ -621,8 +621,7 @@ public class ClearCaseSupport extends ServerVcsSupport implements VcsPersonalSup
         activityIdToHeadline.put(activityId, activityHeadline);
       }
       if (realKey != null) {
-        // TODO.GILLES : put a better description (must ask Jetbrains about purpose)  
-        realKey.getCommentHolder().update(activityHeadline, element.getComment(), "");
+        realKey.getCommentHolder().update(activityHeadline, element.getComment());
       }
       Loggers.VCS.info("Added change : " + vcsChange);
     }
