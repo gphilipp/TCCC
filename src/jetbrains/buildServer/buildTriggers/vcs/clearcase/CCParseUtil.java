@@ -19,6 +19,7 @@ package jetbrains.buildServer.buildTriggers.vcs.clearcase;
 import jetbrains.buildServer.log.Loggers;
 import jetbrains.buildServer.vcs.VcsException;
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +33,6 @@ import java.util.Locale;
 
 public class CCParseUtil {
 
-  private static final Logger LOG = Logger.getLogger(CCParseUtil.class);
-  
   @NonNls private static final String INPUT_DATE_FORMAT = "dd-MMMM-yyyy.HH:mm:ss";
   @NonNls static final String OUTPUT_DATE_FORMAT = "yyyyMMdd.HHmmss";
   @NonNls public static final String CC_VERSION_SEPARATOR = "@@";
@@ -56,6 +55,10 @@ public class CCParseUtil {
 
     try {
       String line = reader.readLine();
+
+      // because we use the -all flag in lshistory command, we have too remove the absolute part
+      line = StringUtils.remove(line, connection.getViewWholePath() + File.separator);
+
       while (line != null) {
         String nextLine = reader.readLine();
         if (!line.endsWith(ClearCaseConnection.LINE_END_DELIMITER)) {
