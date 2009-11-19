@@ -11,11 +11,6 @@
     <setting name="buildJar" value="true" />
     <setting name="mainClass" value="" />
   </component>
-  <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration />
-    </facet>
-  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
