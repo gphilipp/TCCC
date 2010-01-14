@@ -306,11 +306,11 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Local TeamCity 4.5" type="Remote" factoryName="Remote">
+    <configuration default="false" name="TeamCity 5.0 on srvparidtd03" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
+      <option name="HOST" value="srvparidtd03" />
       <option name="PORT" value="5005" />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="5005" />
@@ -320,7 +320,7 @@
       <ConfigurationWrapper RunnerId="Debug" />
       <method>
         <option name="AntTarget" value="false" />
-        <option name="Make" value="false" />
+        <option name="Make" value="true" />
       </method>
     </configuration>
   </component>
@@ -354,29 +354,29 @@
   <component name="libraryTable">
     <library name="TeamCity openAPI">
       <CLASSES>
-        <root url="jar://$TeamCityDistribution$/devPackage/common-api.jar!/" />
-        <root url="jar://$TeamCityDistribution$/devPackage/server-api.jar!/" />
-        <root url="jar://$TeamCityDistribution$/devPackage/agent-api.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/devPackage/common-api.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/devPackage/server-api.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/devPackage/agent-api.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$TeamCityDistribution$/devPackage/javadoc/openApi-help.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/devPackage/javadoc/openApi-help.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$TeamCityDistribution$/devPackage/src/openApi-source.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/devPackage/src/openApi-source.jar!/" />
       </SOURCES>
     </library>
     <library name="TeamCity utils">
       <CLASSES>
-        <root url="jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/openapi.jar!/" />
-        <root url="jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/annotations.jar!/" />
-        <root url="jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/util.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/webapps/ROOT/WEB-INF/lib/openapi.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/webapps/ROOT/WEB-INF/lib/annotations.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/webapps/ROOT/WEB-INF/lib/util.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="Log4j">
       <CLASSES>
-        <root url="jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/log4j-1.2.12.jar!/" />
+        <root url="jar://C:/Users/gphilip/Pro/Tools/TeamCity-5.0-b10574/webapps/ROOT/WEB-INF/lib/log4j-1.2.12.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
