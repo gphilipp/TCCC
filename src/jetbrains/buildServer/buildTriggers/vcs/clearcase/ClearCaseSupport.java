@@ -63,7 +63,6 @@ public class ClearCaseSupport extends ServerVcsSupport implements VcsPersonalSup
       return getViewPath(viewPath);
     }
     ViewPath path = new ViewPath(vcsRoot.getProperty(CC_VIEW_PATH), vcsRoot.getProperty(RELATIVE_PATH));
-    Loggers.VCS.info(String.format("ViewPath of root %s = %s", vcsRoot, path));
     return path;
   }
 

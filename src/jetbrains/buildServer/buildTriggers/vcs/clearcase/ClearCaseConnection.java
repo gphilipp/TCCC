@@ -435,6 +435,7 @@ public class ClearCaseConnection {
       final String normalPath = CCPathElement.normalizePath(ccViewPath);
       return normalPath.equalsIgnoreCase(getClearCaseViewRoot(normalPath));
     } catch (VcsException ignored) {
+        LOG.warn(ccViewPath + " is not a view ", ignored);
       return false;
     }
   }
