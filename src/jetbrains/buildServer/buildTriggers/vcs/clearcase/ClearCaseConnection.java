@@ -254,33 +254,34 @@ public class ClearCaseConnection {
     commandLine.setWorkDirectory(viewPath);
     commandLine.addParameters(arguments);
     Loggers.VCS.info(String.format("%s (simple,dir=%s)", commandLine.getCommandLineString(), viewPath));
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    final ByteArrayOutputStream err = new ByteArrayOutputStream();
+
     final ExecResult execResult;
     try {
       execResult = ourProcessExecutor.execute(commandLine);
     } catch (ExecutionException e) {
       throw new VcsException(e);
     }
+    final String out = execResult.getStdout();
+    final String err = execResult.getStderr();
     LOG.debug("result: " + execResult.toString());
 
     final int processResult = execResult.getExitCode();
     if (processResult != 0) {
-      if (err.size() > 0) {
-        final String errDescr = new String(err.toByteArray());
+      if (err.length() > 0) {
+        final String errDescr = err;
         if (!errDescr.contains("A snapshot view update is in progress") && !errDescr.contains("An update is already in progress")) {
           throw new VcsException(errDescr);
         } else {
-          return new ByteArrayInputStream(out.toByteArray());
+          return new ByteArrayInputStream(err.getBytes());
         }
       } else {
         throw new VcsException("Process " + commandLine.getCommandLineString() + " returns " + processResult);
       }
     } else {
       if (LOG_COMMANDS) {
-        ourLogger.log("\n" + new String(out.toByteArray()));
+        ourLogger.log("\n" + new String(out.getBytes()));
       }
-      return new ByteArrayInputStream(out.toByteArray());
+      return new ByteArrayInputStream(out.getBytes());
     }
   }
 
