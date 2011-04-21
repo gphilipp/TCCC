@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package jetbrains.buildServer.buildTriggers.vcs.clearcase;
 
 import com.intellij.execution.ExecutionException;
@@ -21,7 +20,6 @@ import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.util.io.FileUtil;
 import jetbrains.buildServer.CommandLineExecutor;
 import jetbrains.buildServer.ExecResult;
-import jetbrains.buildServer.ProcessListener;
 import jetbrains.buildServer.buildTriggers.vcs.clearcase.configSpec.ConfigSpec;
 import jetbrains.buildServer.buildTriggers.vcs.clearcase.configSpec.ConfigSpecParseUtil;
 import jetbrains.buildServer.buildTriggers.vcs.clearcase.process.ClearCaseFacade;
@@ -96,9 +94,9 @@ public class ClearCaseConnection {
   private static final String UPDATE_LOG = "teamcity.clearcase.update.result.log";
 
   public static ClearCaseFacade ourProcessExecutor = new ClearCaseFacade() {
-    public ExecResult execute(final GeneralCommandLine commandLine, final ProcessListener listener) throws ExecutionException {
+    
+    public ExecResult execute(final GeneralCommandLine commandLine) throws ExecutionException {
       CommandLineExecutor commandLineConnection = new CommandLineExecutor(commandLine);      
-      commandLineConnection.addListener(listener);
       return commandLineConnection.runProcess();      
     }
 
@@ -260,7 +258,7 @@ public class ClearCaseConnection {
     final ByteArrayOutputStream err = new ByteArrayOutputStream();
     final ExecResult execResult;
     try {
-      execResult = ourProcessExecutor.execute(commandLine, createProcessHandlerListener(out, err)); 
+      execResult = ourProcessExecutor.execute(commandLine);
     } catch (ExecutionException e) {
       throw new VcsException(e);
     }

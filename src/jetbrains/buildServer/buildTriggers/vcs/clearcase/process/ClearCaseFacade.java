@@ -19,10 +19,11 @@ package jetbrains.buildServer.buildTriggers.vcs.clearcase.process;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import jetbrains.buildServer.ExecResult;
-import jetbrains.buildServer.ProcessListener;
+import jetbrains.buildServer.buildTriggers.vcs.clearcase.ProcessListener;
 
 public interface ClearCaseFacade {
-  ExecResult execute(GeneralCommandLine commandLine, ProcessListener listener) throws ExecutionException;
+  
+  ExecResult execute(GeneralCommandLine commandLine) throws ExecutionException;
 
   InteractiveProcessFacade createProcess(final GeneralCommandLine generalCommandLine) throws ExecutionException;
 }
