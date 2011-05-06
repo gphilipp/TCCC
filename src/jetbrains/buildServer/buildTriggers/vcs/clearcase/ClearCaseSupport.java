@@ -268,6 +268,7 @@ public class ClearCaseSupport extends ServerVcsSupport implements VcsPersonalSup
           final int countBefore = result.size();
           checkDirectoryProperty(ClearCaseSupport.CC_VIEW_PATH, properties.get(ClearCaseSupport.CC_VIEW_PATH), result);
 
+/*
           if (result.size() == countBefore) {
             try {
               checkClearCaseView(ClearCaseSupport.CC_VIEW_PATH, properties.get(ClearCaseSupport.CC_VIEW_PATH), result);
@@ -277,6 +278,7 @@ public class ClearCaseSupport extends ServerVcsSupport implements VcsPersonalSup
               result.add(new InvalidProperty(ClearCaseSupport.CC_VIEW_PATH, e.getLocalizedMessage()));
             }
           }
+*/
 
           try {
             if (isEmpty(CCPathElement.normalizePath(properties.get(ClearCaseSupport.RELATIVE_PATH)))) {

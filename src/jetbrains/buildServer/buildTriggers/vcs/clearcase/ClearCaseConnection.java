@@ -275,7 +275,7 @@ public class ClearCaseConnection {
           return new ByteArrayInputStream(err.getBytes());
         }
       } else {
-        throw new VcsException("Process " + commandLine.getCommandLineString() + " returns " + processResult);
+        throw new VcsException("Process " + commandLine.getCommandLineString() + " returns " + processResult + " with error message " + err);
       }
     } else {
       if (LOG_COMMANDS) {
