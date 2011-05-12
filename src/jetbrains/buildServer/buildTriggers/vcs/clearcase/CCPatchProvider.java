@@ -63,6 +63,7 @@ public class CCPatchProvider {
       throw new UnsupportedOperationException("Only supports UCM for now");
     }
 
+
     if (fromVersion == null || configSpecWasChanged) {
       Loggers.VCS.info("Sending whole content...");
       // we'll send down the whole view content

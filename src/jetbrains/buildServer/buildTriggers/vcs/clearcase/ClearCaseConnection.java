@@ -18,6 +18,7 @@ package jetbrains.buildServer.buildTriggers.vcs.clearcase;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.util.PatternUtil;
 import jetbrains.buildServer.CommandLineExecutor;
 import jetbrains.buildServer.ExecResult;
 import jetbrains.buildServer.buildTriggers.vcs.clearcase.configSpec.ConfigSpec;
@@ -48,6 +49,9 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings({"SimplifiableIfStatement"})
 public class ClearCaseConnection {
+  
+  private String user = "teamcity";
+
   private final ViewPath myViewPath;
 
   private final boolean myUCMSupported;
@@ -120,8 +124,8 @@ public class ClearCaseConnection {
     // http://www.philforhumanity.com/ClearCase_Support_17.html
 
     Loggers.VCS.info(String.format("Creating clearcase connection , root=%s, viewPath=%s, ucmSupported pc=%s, checkCSChange=%s", root, viewPath, ucmSupported, checkCSChange));
-    myUCMSupported = ucmSupported;
-    myViewPath = viewPath;
+    this.myUCMSupported = ucmSupported;
+    this.myViewPath = viewPath;
 
     if (!isClearCaseView(myViewPath.getClearCaseViewRoot())) {
       throw new VcsException("Invalid ClearCase view: \"" + myViewPath.getClearCaseViewRoot() + "\"");
@@ -483,7 +487,6 @@ public class ClearCaseConnection {
     Date date = CCParseUtil.toDate(version);
     String escapedDate = CCParseUtil.escapeDate(date);
     String streamName = getStreamName();
-    String user = "teamcity";
     String dynViewTag = StringUtils.lowerCase(user + "_" + streamName + "_" + escapedDate + "_" + uuid);
     String hostname = StringUtils.lowerCase(getHostname());
     String localViewDir = getViewWholePath();
@@ -491,7 +494,7 @@ public class ClearCaseConnection {
 
     // create dynamic view
     LOG.info(String.format("Creating dynamic view %s", dynViewTag));
-    executeSimpleProcess(localViewDir, new String[]{"mkview", "-tag", dynViewTag, "-stream", streamName + "@\\ideapvob", "-stg", hostname + "_ccstg_c_views"});
+    executeSimpleProcess(localViewDir, new String[]{"mkview", "-tag", dynViewTag, "-stream", streamName + getPVobName(), "-stg", hostname + "_ccstg_c_views"});
 
     // mount vob if necessary
     String vobToMount = "\\isl";
@@ -552,7 +555,7 @@ public class ClearCaseConnection {
 
     protected void execute(final String[] args) throws IOException {
       super.execute(args);
-      final StringBuffer commandLine = new StringBuffer();
+      final StringBuilder commandLine = new StringBuilder();
       commandLine.append("cleartool");
       for (String arg : args) {
         commandLine.append(' ');
@@ -612,6 +615,13 @@ public class ClearCaseConnection {
   private String getStreamName() throws VcsException, IOException {
     InputStream inputStream = executeSimpleProcess(myViewPath.getClearCaseViewRoot(), new String[]{"lsstream", "-fmt", "%n"});
     return new BufferedReader(new InputStreamReader(inputStream)).readLine();
+  }
+
+  private String getPVobName() throws VcsException, IOException {
+    InputStream inputStream = executeSimpleProcess(myViewPath.getClearCaseViewRoot(), new String[]{"lsstream", "-fmt", "%Xn"});
+    String result = new BufferedReader(new InputStreamReader(inputStream)).readLine();
+    String[] split = result.split(PatternUtil.convertToRegex("@"));
+    return "@" + split[1];
   }
 
   /**
